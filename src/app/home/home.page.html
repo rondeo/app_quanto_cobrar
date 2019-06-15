@@ -1,0 +1,127 @@
+<ion-header no-border>
+  <ion-toolbar color="scondary">
+
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/opcoes']" routerDirection="forward">
+        <ion-icon name="settings" slot="end"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>
+      Quanto Cobrar?
+    </ion-title>
+<!--
+    <ion-buttons slot="end">
+      <ion-button (click)="doShare()">
+        <ion-icon name="share" slot="end"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+      -->
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content color="secondary">
+
+  <h2 class="ion-padding-start">Digite o valor que você deseja receber</h2>
+
+  <h2>&nbsp;</h2>
+
+  <input class="ion-padding ion-padding ion-justify-content-center" currencyMask [(ngModel)]="valor"
+    placeholder="R$ 0,00" type="tel" />
+
+  <h2>&nbsp;</h2>
+
+  <ion-item-group class="ion-padding-top">
+    <ion-item-divider color="light">
+      <ion-label class="ion-padding-top ion-padding-start">
+        <b>DÉBITO</b>
+        <p *ngIf="obsDebito !='' "><small>{{obsDebito}}</small></p>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item lines="none">
+      <ion-label class="ion-padding-start">
+        <p><small>Taxa de {{debito}}%</small></p>
+      </ion-label>
+
+      <ion-label class="ion-padding-vertical ion-padding-end" slot="end" text-right>
+        {{ valor / (100 - debito) * 100 | currency:'R$'}}
+        <p>Valor das taxas: {{valor / (100 - debito) * 100 - valor | currency:'R$'}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-item-group>
+
+  <ion-item-group>
+    <ion-item-divider color="light">
+      <ion-label class="ion-padding-top ion-padding-start">
+        <b>CRÉDITO À VISTA</b>
+        <p *ngIf="obsCreditoAvista !='' "><small>{{obsCreditoAvista}}</small></p>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item lines="full">
+      <ion-label class="ion-padding-start">1x no cartão <p>Taxa de {{creditoAvista}}%</p>
+      </ion-label>
+
+      <ion-label class="ion-padding-vertical ion-padding-end" slot="end" text-right>
+        {{ valor / (100 - creditoAvista) * 100 | currency:'R$'}}
+        <p>Valor das taxas: {{valor / (100 - creditoAvista) * 100 - valor | currency:'R$'}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-item-group>
+
+
+  <ion-item-group>
+    <ion-item-divider color="light">
+      <ion-label class="ion-padding-top ion-padding-start">
+        <b>CRÉDITO PARCELADO</b>
+        <p *ngIf="obsCreditoParcelado !='' "><small>{{obsCreditoParcelado}}</small></p>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item lines="full">
+      <ion-label class="ion-padding" text-wrap>O valor a ser cobrado é
+        <ion-text color="primary"><b>{{valor / (100 - creditoParcelado) * 100 | currency:'R$'}}</b> </ion-text>
+        e poderá ser pago das seguintes formas:
+        <p>Taxa de {{creditoParcelado}}% - Valor de intermediação:
+          {{(valor / (100 - creditoParcelado) * 100) - valor | currency:'R$'}}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label class="ion-padding-start" slot="start">QUANTIDADE</ion-label>
+      <ion-label class="ion-padding-end" slot="end">TOTAL</ion-label>
+    </ion-item>
+
+    <div *ngFor="let i of [2,3,4,5,6,7,8,9,10,11,12];">
+
+      <ion-item lines="full" *ngIf="tipoJuros=='1'">
+        <ion-label class="ion-padding-start">{{i}}x de
+          {{calcParcelaComposto(valor / (100 - creditoParcelado) * 100,i) | currency:'R$'}}
+        </ion-label>
+        <ion-label class="ion-padding-vertical ion-padding-end" slot="end" text-right>
+          {{calcParcelaComposto(valor / (100 - creditoParcelado) * 100,i) * i | currency:'R$'}}
+          <p>Valor das taxas:
+            {{calcParcelaComposto(valor / (100 - creditoParcelado) * 100,i) * i  - valor | currency:'R$'}}
+          </p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item lines="full" *ngIf="tipoJuros=='2'">
+        <ion-label class="ion-padding-start">{{i}}x de
+          {{calcParcelaSimples(valor,i) | currency:'R$'}}
+          <p>Taxa de {{calcTaxa(i) | number : '1.2-2'}}%</p>
+        </ion-label>
+
+        <ion-label class="ion-padding-vertical ion-padding-end" slot="end" text-right>
+          {{calcParcelaSimples(valor,i) * i | currency:'R$'}}
+          <p>Valor das taxas:
+            {{calcParcelaSimples(valor,i) * i  - valor | currency:'R$'}}
+          </p>
+        </ion-label>
+
+      </ion-item>
+    </div>
+  </ion-item-group>
+</ion-content>

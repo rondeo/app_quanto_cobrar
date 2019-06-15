@@ -1,0 +1,94 @@
+<ion-header no-border>
+  <ion-toolbar color="scondary">
+    <ion-buttons slot="start">
+      <ion-button (click)="doBack()">
+        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Configurações</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form" novalidate>
+    <ion-item-group>
+      <ion-item-divider color="light">
+        <ion-label class="ion-padding-top ion-padding-start"><b>DÉBITO</b></ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none" class="ion-padding-start">
+        <ion-label position="floating">Taxa de Débito</ion-label>
+        <ion-input formControlName="debito" type="tel" clearInput></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="ion-padding-start">
+        <ion-label position="floating">Observação de Débito</ion-label>
+        <ion-input formControlName="obsDebito" clearInput></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider color="light">
+        <ion-label class="ion-padding-top ion-padding-start"><b>CRÉDITO À VISTA</b></ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none" class="ion-padding-start">
+        <ion-label position="floating">Taxa de Crédito à Vista</ion-label>
+        <ion-input formControlName="creditoAvista" type="tel" clearInput></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="ion-padding-start">
+        <ion-label position="floating">Observação de Crédito à Vista</ion-label>
+        <ion-input formControlName="obsCreditoAvista" clearInput></ion-input>
+      </ion-item>
+    </ion-item-group>
+
+    <ion-item-group>
+      <ion-item-divider color="light">
+        <ion-label class="ion-padding-top ion-padding-start"><b>CRÉDITO PARCELADO</b></ion-label>
+      </ion-item-divider>
+
+      <ion-item lines="none" class="ion-padding-start">
+        <ion-label position="floating">Tipo de Juros</ion-label>
+        <ion-select formControlName="tipoJuros" okText="OK" cancelText="Cancelar">
+          <ion-select-option value="1">Composto</ion-select-option>
+          <ion-select-option value="2">Simples</ion-select-option>
+        </ion-select> 
+      </ion-item>
+
+      <ion-item lines="none" class="ion-padding-start">
+        <ion-label position="floating">Taxa de Crédito Parcelado</ion-label>
+        <ion-input formControlName="creditoParcelado" type="tel" clearInput></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="ion-padding-start">
+        <ion-label position="floating">Taxa de Parcelamento</ion-label>
+        <ion-input formControlName="taxaParcelamento" type="tel" clearInput></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="ion-padding-start">
+        <ion-label position="floating">Observação de Parcelamento</ion-label>
+        <ion-input formControlName="obsCreditoParcelado" clearInput></ion-input>
+      </ion-item>
+    </ion-item-group>
+  </form>
+
+  <br>
+  <div padding>
+    <ion-chip color="primary">
+      <small>
+        Caso você não saiba os valores, você pode vistar o site <a target="_blank"
+          href="https://www.calculadoradetaxas.com.br/">Calculadora
+          de Taxas</a> e verificar.</small>
+    </ion-chip>
+  </div>
+
+</ion-content>
+
+<ion-footer no-border>
+  <ion-toolbar>
+    <div padding>
+      <ion-button expand="block" size="large" (click)="doSave()" color="secondary">Salvar</ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
